@@ -1,21 +1,44 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
 
-volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+
+  symfony:
+      container_name: konso
+      build:
+       context: .
+       dockerfile: Dockerfile.symfony
+      # image: thecodingmachine/php:8.1-v4-cli
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
+      ports:
+        - 8000:8000
+      # labels:
+        # - "traefik.enable=true"
+        # # # - "traefik.frontend.rule=Host:${SITE_URL}"
+        # # - "traefik.port=8080"
+        # - "traefik.backend=drupal"
+      volumes:
+         - ${PWD}:/src/
+         # pour récupération composer/auth.json - /home/docker/.composer == composer config home
+         - ${HOME}/.config/composer:/home/docker/.composer
+      working_dir: /src
+      environment:
+        PHP_EXTENSION_GD: 1
+        PHP_EXTENSION_INTL: 1
+        PHP_EXTENSION_XDEBUG: 1
+
+        XDEBUG_MODE: debug
+        XDEBUG_CLIENT_HOST: host.docker.internal
+        XDEBUG_CONFIG: "client_host=host.docker.internal"
+        XDEBUG_SESSION: 1
+
+
+  database:
+    image: mariadb:11
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+      MARIADB_DATABASE: app
+      # You should definitely change the password in production
+      MARIADB_PASSWORD: app
+      MARIADB_USER: app

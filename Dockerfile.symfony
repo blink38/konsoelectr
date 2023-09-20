@@ -1,0 +1,9 @@
+FROM --platform=linux/amd64 thecodingmachine/php:8.1-v4-cli
+
+WORKDIR /tmp
+
+RUN sudo apt update && sudo apt install -y composer
+
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+
+ENTRYPOINT [ "/home/docker/.symfony5/bin/symfony", "serve", "--no-tls"]
