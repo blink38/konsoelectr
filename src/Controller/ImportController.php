@@ -44,13 +44,13 @@ class ImportController extends AbstractController
 
                 // $moved = $file->move(sys_get_temp_dir(), $file->getClientOriginalName());
                 
-                $content = $file->getcontent();
-                $service->importRelevesFromFileContent($content, Releve::class);
+                $lines = $service->importRelevesFromFileContent($file->getcontent(), $import->getLibelle());
+
 
             }
             // ... perform some action, such as saving the task to the database
 
-            return $this->redirectToRoute('app_import');
+            return $this->redirectToRoute('app_import', [ 'message' => 'Import ' . $import->getLibelle() . ' effectué avec succès. ' . count($lines) . ' relevés importés' ]);
         }
 
 

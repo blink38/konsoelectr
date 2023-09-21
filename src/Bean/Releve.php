@@ -11,36 +11,37 @@ class Releve
     private $date;
     private $conso;
 
-
     /**
      * @SerializedName("date")
      * @param mixed $date
      */
-    #[SerializedName('date')]
-    public function setDate($date) : static {
+    #[SerializedName('Horodate')]
+    public function setHorodate($date) : static {
 
         $this->date = $date;
         return $this;
 
     }
 
-    public function getDate()
+    public function getHorodate() : String
     {
         return $this->date;
     }
 
-    public function getConso(){
-        return $thise->conso;
+    public function getValeur() : int
+    {
+        if (is_string($this->conso)) {
+            return (int) $this->conso;
+        }
+        return $this->conso;
     }
 
     /**
      * @SerializedName("conso")
      * @param mixed $conso
      */   
-     #[SerializedName('conso')]
-
-
-    public function setConso($conso) : static {
+     #[SerializedName('Valeur')]
+    public function setValeur($conso) : static {
 
         $this->conso = $conso;
         return $this;

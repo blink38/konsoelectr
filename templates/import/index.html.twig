@@ -8,5 +8,11 @@
 
     <a href="{{ path('app_import_new') }}">Importer de nouvelles données</a>
 
+
+
+    {% if message %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+    
 </div>
 {% endblock %}
