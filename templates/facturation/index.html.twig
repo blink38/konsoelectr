@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Scénarios de facturation{% endblock %}
+
+{% block body %}
+
+<div class="import-wrapper">
+
+
+    Scénarios de facturation  :
+    <ul>
+        {% for facturation in facturations %}
+            <li><a href="{{ path('app_facturation_show', {'id' : facturation.id })}}">{{ facturation.libelle }}</a>
+                <a href="{{ path('app_facturation_delete', {'id' : facturation.id })}}">supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    <div>
+    <a href="{{ path('app_facturation_new') }}">Ajouter un scénario de facturation</a>
+{{ form(form) }}
+    </div>
+
+</div>
+{% endblock %}

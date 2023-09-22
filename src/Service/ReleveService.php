@@ -22,6 +22,7 @@ class ReleveService
     }
 
 
+
     public function addReleves(array $releves, String $importLibelle): array
     {
 
@@ -52,10 +53,7 @@ class ReleveService
 
                 $r = new Releve();
                 $r->setConso($releve->getValeur());
-                
-                $dateTime = DateTime::createFromFormat(DateTimeInterface::ISO8601, $releve->getHorodate());
-               
-                $r->setDate($dateTime);
+                $r->setDate($releve->getHorodate());
                 $r->setImport($import);
 
                 $this->doctrine->persist($r);

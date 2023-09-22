@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facturation{% endblock %}
+
+{% block body %}
+
+<div class="import-wrapper">
+
+    <h1>Facturation {{ facturation.libelle }}</h1>
+
+
+    <a href="{{ path('app_tarif_add', { 'id' : facturation.id })}}">Ajouter un tarif</a>
+</div>
+{% endblock %}

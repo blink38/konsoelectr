@@ -26,10 +26,10 @@ class FacturationRepository extends ServiceEntityRepository
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
+//            ->orderBy('s.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -38,8 +38,8 @@ class FacturationRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?Facturation
 //    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
+//        return $this->createQueryBuilder('s')
+//            ->andWhere('s.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

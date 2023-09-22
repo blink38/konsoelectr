@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ReleveRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReleveRepository::class)]
 class Releve
 {
+
+    const FORMAT_DATE = "Y-m-d\TH:i:sO";
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,8 +24,9 @@ class Releve
     #[ORM\Column]
     private ?int $conso = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne( cascade : ['remove' ] )]
     private ?Import $import = null;
+
 
     public function getId(): ?int
     {
@@ -33,9 +38,15 @@ class Releve
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(\DateTimeInterface|string $date): static
     {
-        $this->date = $date;
+        if (is_string($date)){
+            $this->date = DateTime::createFromFormat(self::FORMAT_DATE, $date);
+        }
+
+        if ($date instanceof \DateTimeInterface){
+            $this->date = $date;
+        }
 
         return $this;
     }
@@ -63,4 +74,5 @@ class Releve
 
         return $this;
     }
+
 }

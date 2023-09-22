@@ -21,28 +21,66 @@ class ImportRepository extends ServiceEntityRepository
         parent::__construct($registry, Import::class);
     }
 
-//    /**
-//     * @return Import[] Returns an array of Import objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function infoImport($id)
+    {
 
-//    public function findOneBySomeField($value): ?Import
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $this->createQueryBuilder('i')
+            ->select('min(r.date) as start, max(r.date) as end, count(r.id) as count')
+            ->leftJoin('App\Entity\Releve', 'r', 'WITH', 'i.id = r.import')
+            ->where('i.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+
+    public function delete($id): bool
+    {
+
+        try {
+            $this->createQueryBuilder('r')
+                ->delete('App\Entity\Releve', 'r')
+                ->where('r.import = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->execute();
+
+            $this->createQueryBuilder('i')
+                ->delete('App\Entity\Import', 'i')
+                ->where('i.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->execute();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    //    /**
+    //     * @return Import[] Returns an array of Import objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('i.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Import
+    //    {
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

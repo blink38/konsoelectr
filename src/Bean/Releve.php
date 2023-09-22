@@ -3,7 +3,6 @@
 namespace App\Bean;
 
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 class Releve
 {

@@ -6,13 +6,17 @@
 
 <div class="import-wrapper">
 
+
+    Jeux de données :
+    <ul>
+        {% for import in imports %}
+            <li>{{ import.libelle }} - {{ import.date|date("d/m/Y H:i") }} - {{ import.nbReleves }}  {% if import.nbReleves > 0 %}du {{ import.start|date("d/m/Y H:i") }} au {{ import.end|date("d/m/Y H:i") }} {% endif %}
+            
+            <a href="{{ path('app_import_delete', {'id' : import.id })}}">supprimer</a>
+            </li>
+        {% endfor %}
+    </ul>
     <a href="{{ path('app_import_new') }}">Importer de nouvelles données</a>
 
-
-
-    {% if message %}
-    <div class="alert alert-info">{{ message }}</div>
-    {% endif %}
-    
 </div>
 {% endblock %}
