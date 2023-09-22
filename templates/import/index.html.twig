@@ -8,15 +8,25 @@
 
 
     Jeux de données :
-    <ul>
+    <ul class="collection">
+
         {% for import in imports %}
-            <li>{{ import.libelle }} - {{ import.date|date("d/m/Y H:i") }} - {{ import.nbReleves }}  {% if import.nbReleves > 0 %}du {{ import.start|date("d/m/Y H:i") }} au {{ import.end|date("d/m/Y H:i") }} {% endif %}
-            
-            <a href="{{ path('app_import_delete', {'id' : import.id })}}">supprimer</a>
+            <li class="collection-item avatar"> 
+                <i class="material-icons circle">folder</i>
+                <span class="title">{{ import.libelle }}</span> <span class="date">{{ import.date|date("d/m/Y H:i") }}</span>
+                <p>nombre de relevés :  <strong>{{ import.nbReleves }}</strong>
+                {% if import.nbReleves > 0 %}<br />du {{ import.start|date("d/m/Y H:i") }} au {{ import.end|date("d/m/Y H:i") }} {% endif %}
+                </p>
+           
+            <a href="{{ path('app_import_delete', {'id' : import.id })}}" class="collection-item-delete secondary-content">supprimer</a>
             </li>
         {% endfor %}
     </ul>
     <a href="{{ path('app_import_new') }}">Importer de nouvelles données</a>
 
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="/js/import.js"></script>
 {% endblock %}

@@ -1,6 +1,29 @@
+.app-navbar {
 
+    background-color: #4a7ac3;
+
+    .brand-logo {
+        margin-left: 1rem;
+        margin-right: 2rem;
+        position: inherit;
+    }
+}
 
 .body-container {
 
     margin-top: 2em;
+}
+
+
+
+.import-wrapper {
+
+    .collection-item {
+
+        .date {
+            color: #aaaaaa;
+            font-size: 0.95rem;
+            margin-left: 1rem;
+        }
+    }
 }

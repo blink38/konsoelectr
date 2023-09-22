@@ -30,7 +30,7 @@ class ImportController extends AbstractController
     public function delete(int $id, ImportService $service): Response
     {
 
-        $service->remove($id);
+       // $service->remove($id);
 
         return $this->redirectToRoute('app_import');
     }
