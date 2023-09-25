@@ -53,8 +53,6 @@ class TarifController extends AbstractController
     {
         $form = $this->createForm(TarifType::class, $tarif);
 
-
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

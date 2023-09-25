@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Simulations{% endblock %}
+
+{% block body %}
+
+<div class="simulation-wrapper">
+
+
+    <h1>Simulations</h1>
+
+    <ul class="collection">
+
+        {% for simulation in simulations %}
+            <li class="collection-item avatar"> 
+                <i class="material-icons circle">settings</i>
+                <span class="title">Simulation n°{{ simulation.id }}</span> du <span class="date">{{ simulation.date|date("d/m/Y H:i") }}</span>
+
+                <p>{{ simulation.facturation.libelle }} - {{ simulation.data.libelle }}</p>
+                
+                {% if not simulation.resultat is empty %}
+                <p class="resultat">{{ simulation.resultat.montant|format_currency('EUR') }}</p>
+                {% endif %}
+
+                <p>
+                 <a href="{{ path('app_simulation_execute', {'id' : simulation.id })}}" class="btn green accent-4">
+                 executer</a>
+                </p>
+           
+            <a href="{{ path('app_simulation_delete', {'id' : simulation.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
+            </li>
+        {% endfor %}
+    </ul>
+
+      <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">add</i> Nouvelle simulation
+            </div>
+            <div class="collapsible-body">   
+                <fieldset>
+                {{ form(form) }}
+                </fieldset>
+            </div>
+        </li>
+
+    </ul>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="/js/collection-delete.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, []);
+    });
+  </script>
+ {% endblock %}

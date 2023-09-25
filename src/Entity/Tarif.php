@@ -38,10 +38,10 @@ class Tarif
     #[ORM\Column]
     private ?bool $dimanche = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_debut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column]
@@ -58,6 +58,51 @@ class Tarif
 
     #[ORM\ManyToOne(targetEntity: Facturation::class, inversedBy: 'tarifs')]
     private ?Facturation $facturation = null;
+
+
+    #[ORM\Column(length: 2048, nullable: true)]
+    private ?string $days = null;
+    
+
+    private int $minutes_debut = 0;
+    private int $minutes_fin = 0;
+    private array $jours = [];
+
+    private array $daysApply = [];
+
+
+    public function prepare(): void
+    {
+        $this->jours[0] = false;
+        $this->jours[1] = $this->isLundi();
+        $this->jours[2] = $this->isMardi();
+        $this->jours[3] = $this->isMercredi();
+        $this->jours[4] = $this->isJeudi();
+        $this->jours[5] = $this->isVendredi();
+        $this->jours[6] = $this->isSamedi();
+        $this->jours[7] = $this->isDimanche();
+
+        $start_h = (int) $this->getHeureDebut()->format('G');
+        $start_m = (int) $this->getHeureDebut()->format('i');
+        $this->minutes_debut = $start_h * 60 + $start_m;
+
+        $end_h = (int) $this->getHeureFin()->format('G');
+        $end_m = (int) $this->getHeureFin()->format('i');
+        $this->minutes_fin = $end_h * 60 + $end_m;
+
+        if (!empty($this->days)){
+
+            $start = new \DateTime('1970-01-01');
+
+            foreach (explode(',', $this->days) as $d){
+
+                $dat = \DateTime::createFromFormat("d-m-Y", $d);
+
+                $this->daysApply[] = $dat->diff($start)->format('%a');
+            }
+        }
+    }
+
 
     public function getId(): ?int
     {
@@ -165,7 +210,7 @@ class Tarif
         return $this->date_debut;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): static
+    public function setDateDebut(?\DateTimeInterface $date_debut): static
     {
         $this->date_debut = $date_debut;
 
@@ -177,7 +222,7 @@ class Tarif
         return $this->date_fin;
     }
 
-    public function setDateFin(\DateTimeInterface $date_fin): static
+    public function setDateFin(?\DateTimeInterface $date_fin): static
     {
         $this->date_fin = $date_fin;
 
@@ -232,15 +277,45 @@ class Tarif
         return $this;
     }
 
-    public function getPriority() : int
+    public function getPriority(): int
     {
         return $this->priority;
     }
 
-    public function setPriority(int $priority) : static
+    public function setPriority(int $priority): static
     {
         $this->priority = $priority;
 
         return $this;
+    }
+
+    public function getMinutes_debut(): int
+    {
+        return $this->minutes_debut;
+    }
+
+    public function getMinutes_fin(): int
+    {
+        return $this->minutes_fin;
+    }
+    public function getJours(): array
+    {
+        return $this->jours;
+    }
+
+    public function getDays() : ?string
+    {
+        return $this->days;
+    }
+
+    public function setDays($days_apply): static
+    {
+        $this->days = $days_apply;
+        return $this;
+    }
+
+    public function getDaysApply(): array
+    {
+        return $this->daysApply;
     }
 }

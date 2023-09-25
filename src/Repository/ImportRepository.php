@@ -25,8 +25,9 @@ class ImportRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('i')
-            ->select('min(r.date) as start, max(r.date) as end, count(r.id) as count')
+            ->select('min(r.date) as start, max(r.date) as end, count(distinct r.id) as count, count(distinct s.id) as simulation')
             ->leftJoin('App\Entity\Releve', 'r', 'WITH', 'i.id = r.import')
+            ->leftJoin('App\Entity\Simulation', 's', 'WITH', 'i.id = s.data')
             ->where('i.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -41,6 +42,13 @@ class ImportRepository extends ServiceEntityRepository
             $this->createQueryBuilder('r')
                 ->delete('App\Entity\Releve', 'r')
                 ->where('r.import = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->execute();
+
+            $this->createQueryBuilder('r')
+                ->delete('App\Entity\Simulation', 's')
+                ->where('s.data = :id')
                 ->setParameter('id', $id)
                 ->getQuery()
                 ->execute();

@@ -21,7 +21,11 @@ class ReleveService
         $this->doctrine = $em;
     }
 
-
+    public function listByImport(Import $import){
+    
+        return $this->repository->findBy(['import' => $import]);
+    }
+    
 
     public function addReleves(array $releves, String $importLibelle): array
     {
@@ -43,12 +47,12 @@ class ReleveService
             $this->doctrine->clear();
 
             $enbase = [];
-            $batchSize = 100;
+            $batchSize = 10;
             $count = 0;
 
             foreach ($releves as $releve) {
 
-                if ($count ==0){
+                if ($count == 0){
                     $import = $this->doctrine->find(Import::class, $import->getId());
                 }
 
@@ -58,14 +62,15 @@ class ReleveService
                 $r->setImport($import);
 
                 $this->doctrine->persist($r);
+                $enbase[] = $r;
 
                 $count++;
-                if ($count > $batchSize){
+                if ($count >= $batchSize){
                     $count = 0;
                     $this->doctrine->flush();
                     $this->doctrine->clear();
                 }
-                $enbase[] = $r;
+               
             }
         
             $this->doctrine->commit();

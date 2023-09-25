@@ -28,6 +28,8 @@ class Import
     private ?\DateTimeInterface $date = null;
 
     private int $nbReleves = 0;
+    private int $nbSimulations = 0;
+    
     private ?\DateTimeInterface $start = null;
     private ?\DateTimeInterface $end = null;
     
@@ -138,4 +140,23 @@ class Import
         return $this;
     }
 
+
+    /**
+     * Get the value of nbSimulations
+     */ 
+    public function getNbSimulations() : int
+    {
+        return $this->nbSimulations;
+    }
+
+    /**
+     * Set the value of nbSimulations
+     *
+     * @return  self
+     */ 
+    public function setNbSimulations(int $nbSimulations) :static
+    {
+        $this->nbSimulations = $nbSimulations;
+        return $this;
+    }
 }

@@ -47,12 +47,18 @@ class TarifType extends AbstractType
             
         ]);
 
+        $builder->add('days', TextType::class, [
+            'required' => false
+        ]);
+
         $builder->add('date_debut', DateType::class, [
             'widget' => 'single_text',
-            'input'  => 'datetime'
+            'input'  => 'datetime',
+            'required' => false
         ])->add('date_fin', DateType::class, [
             'widget' => 'single_text',
-            'input'  => 'datetime'
+            'input'  => 'datetime',
+            'required' => false
         ]);
 
 

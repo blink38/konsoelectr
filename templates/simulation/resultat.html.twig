@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Simulations{% endblock %}
+
+{% block body %}
+
+<div class="simulation-wrapper">
+
+
+    <h1>Simulation #{{simulation.id}}</h1>
+
+    {{ simulation.resultat['montant']|format_currency('EUR') }} €
+    
+
+<pre>
+{{ simulation.resultat['debug']  }} €
+</pre>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+ {% endblock %}

@@ -27,6 +27,29 @@ class Releve
     #[ORM\ManyToOne( cascade : ['remove' ] )]
     private ?Import $import = null;
 
+    private int $minutes = 0;
+    private int $jourSemaine = 0;
+    private int $timestamp = 0;
+
+    private int $dayApply = 0;
+
+
+    public function prepare(): void
+    {
+
+        $start_h = (int) $this->getDate()->format('G');
+        $start_m = (int) $this->getDate()->format('i');
+        $this->minutes = $start_h * 60 + $start_m;
+
+        $this->jourSemaine = (int) $this->getDate()->format('N');
+        $this->timestamp = (int) $this->getDate()->format('U');
+
+        $start = new \DateTime('1970-01-01');
+
+        $this->dayApply =  $this->getDate()->diff($start)->format('%a');
+
+    }
+
 
     public function getId(): ?int
     {
@@ -75,4 +98,23 @@ class Releve
         return $this;
     }
 
+    public function getMinutes(): int
+    {
+        return $this->minutes;
+    }
+
+    public function getJourSemaine() : int
+    {
+        return $this->jourSemaine;
+    }
+
+    public function getTimestamp() : int
+    {
+        return $this->timestamp;
+    }
+
+    public function getDayApply(): int
+    {
+        return $this->dayApply;
+    }
 }

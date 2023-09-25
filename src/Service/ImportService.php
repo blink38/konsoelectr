@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Repository\ImportRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ImportService
 {
@@ -41,6 +40,7 @@ class ImportService
                 $info->setEnd($data['end']);
             }
             $info->setNbReleves($data['count']);
+            $info->setNbSimulations($data['simulation']);
         }
 
 

@@ -8,6 +8,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         
         {% block stylesheets %}
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
@@ -16,6 +17,7 @@
 
 
         {% block javascripts %}
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
         <script>
@@ -42,6 +44,9 @@
                 <li>
                     <a class="nav-link active" aria-current="page" href="{{ path('app_facturation') }}">Facturation</a>
                 </li>
+                <li>
+                    <a class="nav-link active" aria-current="page" href="{{ path('app_simulation') }}">Simulation</a>
+                </li>
             </ul>
 
 
@@ -54,6 +59,9 @@
             </li>
             <li>
                 <a class="nav-link active" aria-current="page" href="{{ path('app_facturation') }}">Facturation</a>
+            </li>
+            <li>
+                <a class="nav-link active" aria-current="page" href="{{ path('app_simulation') }}">Simulation</a>
             </li>
         </ul>
 

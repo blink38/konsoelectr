@@ -17,7 +17,8 @@
                 <p>nombre de relevés :  <strong>{{ import.nbReleves }}</strong>
                 {% if import.nbReleves > 0 %}<br />du {{ import.start|date("d/m/Y H:i") }} au {{ import.end|date("d/m/Y H:i") }} {% endif %}
                 </p>
-           
+                {% if import.nbSimulations > 0 %}<p>
+                Nombre de simulation utilisant le jeu de données : {{ import.nbSimulations}}</p>{% endif %}
             <a href="{{ path('app_import_delete', {'id' : import.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
             </li>
         {% endfor %}
