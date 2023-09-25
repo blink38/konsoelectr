@@ -39,22 +39,22 @@ class ReleveService
         $import = new Import();
         $import->setLibelle($importLibelle);
         $import->setDate(new \DateTime('now'));
+        $this->doctrine->persist($import);
+        // $this->doctrine->flush();
 
-        $this->doctrine->beginTransaction();
+        // $this->doctrine->beginTransaction();
         try {
-            $this->doctrine->persist($import);
-            $this->doctrine->flush();
-            $this->doctrine->clear();
+            // $this->doctrine->clear();
 
             $enbase = [];
-            $batchSize = 10;
-            $count = 0;
+            // $batchSize = 10;
+            // $count = 0;
 
             foreach ($releves as $releve) {
 
-                if ($count == 0){
-                    $import = $this->doctrine->find(Import::class, $import->getId());
-                }
+            //     if ($count == 0){
+            //         $import = $this->doctrine->find(Import::class, $import->getId());
+            //     }
 
                 $r = new Releve();
                 $r->setConso($releve->getValeur());
@@ -64,19 +64,21 @@ class ReleveService
                 $this->doctrine->persist($r);
                 $enbase[] = $r;
 
-                $count++;
-                if ($count >= $batchSize){
-                    $count = 0;
-                    $this->doctrine->flush();
-                    $this->doctrine->clear();
-                }
+                // $count++;
+                // if ($count >= $batchSize){
+                //     $count = 0;
+                //     $this->doctrine->flush();
+                //     $this->doctrine->clear();
+                // }
                
             }
         
-            $this->doctrine->commit();
+            $this->doctrine->flush();
+            // $this->doctrine->commit();
 
         } catch (\Exception $e) {
-            $this->doctrine->rollback();
+            error_log($e);
+            // $this->doctrine->rollback();
         }
 
         // echo "Peak memory usage: " . memory_get_peak_usage() . "\n";
