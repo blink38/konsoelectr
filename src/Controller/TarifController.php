@@ -22,14 +22,35 @@ class TarifController extends AbstractController
 {
 
 
-    #[Route('/tarif/add/{id}', name: 'app_tarif_add')]
-    public function add(Request $request, int $id, TarifService $service, FacturationService $facturationService): Response
+    #[Route('/tarif/delete/{id}', name: 'app_tarif_delete')]
+    public function delete(int $id, TarifService $service): Response
+    {
+
+        $tarif = $service->findById($id);
+        $service->remove($id);
+        
+        return $this->redirectToRoute('app_facturation_show', [ 'id' => $tarif->getFacturation()->getId()]);
+    }
+
+    #[Route('/tarif/add/{facturation_id}', name: 'app_tarif_add')]
+    public function add(Request $request, int $facturation_id, TarifService $service, FacturationService $facturationService): Response
     {
 
         $tarif = new Tarif();
+        $tarif->setFacturation($facturationService->findById($facturation_id));
 
-        $tarif->setFacturation($facturationService->findById($id));
+        return $this->addOrEdit($request, $tarif, $service);
+    }
 
+    #[Route('/tarif/edit/{id}', name: 'app_tarif_edit')]
+    public function edit(Request $request, int $id, TarifService $service): Response
+    {
+        $tarif = $service->findById($id);
+        return $this->addOrEdit($request, $tarif, $service);
+    }
+
+    private function addOrEdit(Request $request, Tarif $tarif, TarifService $service) : Response
+    {
         $form = $this->createForm(TarifType::class, $tarif);
 
 
@@ -44,7 +65,7 @@ class TarifController extends AbstractController
             $service->persist($tarif);
 
 
-            return $this->redirectToRoute('app_facturation');
+            return $this->redirectToRoute('app_facturation_show', [ 'id' => $tarif->getFacturation()->getId()]);
 
             
         }

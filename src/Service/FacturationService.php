@@ -37,7 +37,19 @@ class FacturationService
 
     public function remove(int $id): bool
     {
-        return $this->repository->delete($id);
+        try {
+            $facturation = $this->repository->find($id);
+
+            if ($facturation){
+                $this->doctrine->remove($facturation);
+                $this->doctrine->flush();
+                return true;
+            }
+
+        } catch (\Exception $e) {
+            error_log($e);
+        }
+        return false;
     }
 
     public function list(): array

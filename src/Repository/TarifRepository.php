@@ -21,6 +21,16 @@ class TarifRepository extends ServiceEntityRepository
         parent::__construct($registry, Tarif::class);
     }
 
+
+    public function findByFacturationId($id): array
+    {
+        return $this->createQueryBuilder('t')
+                   ->andWhere('t.facturation = :val')
+                   ->setParameter('val', $id)
+                   ->getQuery()
+                   ->getResult()
+               ;
+    }
 //    /**
 //     * @return Tarif[] Returns an array of Tarif objects
 //     */

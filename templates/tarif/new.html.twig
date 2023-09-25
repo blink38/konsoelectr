@@ -4,9 +4,55 @@
 
 {% block body %}
 
-<h1>Nouveau tarif</h1>
+<h1>Edition d'un tarif</h1>
 
-{{ form(form) }}
 
+<div class="row">
+    {{ form_start(form) }}
+
+    <div class="col s12">
+        {{ form_row(form.libelle) }}
+    </div>
+
+    <div class="col s12">{{ form_row(form.facturation) }}</div>
+    
+    <div class="col s12 description">Date de début et de fin d'application du tarif</div>
+    <div class="col s6">{{ form_row(form.date_debut) }}</div>
+    <div class="col s6">{{ form_row(form.date_fin) }}</div>
+
+
+    <div class="col s12 description">Jour de la semaine pour lesquels le tarif s'applique</div>
+    {% for jour in [form.lundi,form.mardi,form.mercredi,form.jeudi,form.vendredi,form.samedi,form.dimanche] %}
+    <div class="col s6">
+    <p>
+    <label>
+        <input  name="{{ field_name(jour) }}" 
+                value="{{ field_value(jour) }}"
+                type="checkbox" />
+        <span>{{ field_label(jour) }}</span>
+    </label>
+    </p>
+    </div>
+    {% endfor %}
+
+
+
+    <div class="col s12 description">Heures auxquelles le tarif s'applique</div>
+    
+    <div class="col s6">{{ form_row(form.heure_debut) }}</div>
+    <div class="col s6">{{ form_row(form.heure_fin) }}</div>
+
+    <div class="col s6 description">Tarif (en € HT)</div>
+    <div class="col s6 description">Priorité</div>
+
+    <div class="col s6">{{ form_row(form.tarif) }}</div>
+
+    <div class="col s6">{{ form_row(form.priority) }}</div>
+
+    <div class="col s12">{{ form_end(form) }}</div>
+
+    {{ form_end(form) }}
+</div>
 
 {% endblock %}
+

@@ -7,20 +7,49 @@
 <div class="import-wrapper">
 
 
-    Scénarios de facturation  :
-    <ul>
+    <h1>Scénarios de facturation</h1>
+
+    <ul class="collection">
         {% for facturation in facturations %}
-            <li><a href="{{ path('app_facturation_show', {'id' : facturation.id })}}">{{ facturation.libelle }}</a>
-                <a href="{{ path('app_facturation_delete', {'id' : facturation.id })}}">supprimer</a>
+             <li class="collection-item avatar"> 
+                <a href="{{ path('app_facturation_show', {'id' : facturation.id })}}">
+                    <i class="material-icons circle">point_of_sale</i>
+                </a>
+                <p class="title"><a href="{{ path('app_facturation_show', {'id' : facturation.id })}}">#{{ facturation.id }} {{ facturation.libelle }}</a></p>
+                <span>{{ facturation.tarifs|length }} tarif{% if facturation.tarifs|length > 1 %}s{% endif %} défini{% if facturation.tarifs|length > 1 %}s{% endif %}</span>
+                
+                <a href="{{ path('app_facturation_delete', {'id' : facturation.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
+
+
             </li>
         {% endfor %}
     </ul>
 
 
-    <div>
-    <a href="{{ path('app_facturation_new') }}">Ajouter un scénario de facturation</a>
-{{ form(form) }}
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">add</i> Ajouter une facturation
+            </div>
+            <div class="collapsible-body">   
+                <fieldset>
+                {{ form(form) }}
+                </fieldset>
+            </div>
+        </li>
+
     </div>
 
 </div>
 {% endblock %}
+
+ {% block javascripts %}
+  {{ parent() }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems, []);
+    });
+  </script>
+  <script src="/js/collection-delete.js"></script>
+ {% endblock %}

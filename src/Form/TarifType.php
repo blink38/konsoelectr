@@ -21,6 +21,7 @@ class TarifType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('libelle', TextType::class, [
                 'attr' => [
@@ -28,12 +29,10 @@ class TarifType extends AbstractType
                 ]
             ]);
 
-
-
         foreach (['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'] as $key) {
             $builder->add($key, CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-check-input'
+                    'class' => ''
                 ],
                 'required' => false,
             ]);
@@ -42,37 +41,50 @@ class TarifType extends AbstractType
         $builder->add('facturation', EntityType::class, [
             'class' => Facturation::class,
             'choice_label' => 'libelle',
+            'attr' => [
+                'class' => 'browser-default'
+            ]
             
         ]);
 
         $builder->add('date_debut', DateType::class, [
             'widget' => 'single_text',
-            'input'  => 'datetime_immutable'
+            'input'  => 'datetime'
         ])->add('date_fin', DateType::class, [
             'widget' => 'single_text',
-            'input'  => 'datetime_immutable'
+            'input'  => 'datetime'
         ]);
 
 
         // heure de début et de fin du tarif
         $builder->add('heure_debut', TimeType::class,[
             'widget' => 'single_text',
-            'input'  => 'datetime_immutable',
+            'input'  => 'datetime',
             'html5' => true,
         ])->add('heure_fin', TimeType::class,[
             'widget' => 'single_text',
-            'input'  => 'datetime_immutable'
+            'input'  => 'datetime'
         ]);
 
         $builder->add('tarif', NumberType::class, [
             'attr' => [
-                'class' => 'form-control'
+                'class' => ''
+            ]
+        ]);
+
+        $builder->add('priority', NumberType::class, [            
+            'label' => 'Priorité (défaut = 0) (la valeur la plus grande est prioritaire)',
+
+
+            'attr' => [
+                'class' => ''
             ]
         ]);
 
         $builder->add('ajouter', SubmitType::class, [
+            'label' => empty($options['data']->getId()) ? 'Ajouter' : 'Modifier',
             'attr' => [
-                'class' => 'form-control'
+                'class' => 'btn'
             ]
         ]);
     }

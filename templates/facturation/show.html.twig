@@ -4,11 +4,31 @@
 
 {% block body %}
 
-<div class="import-wrapper">
+<div class="tarif-wrapper">
 
-    <h1>Facturation {{ facturation.libelle }}</h1>
+    <h1>Facturation
+    <a href="{{ path('app_facturation', {'id' : facturation.id })}}">{{ facturation.libelle }}</a></h1>
 
 
-    <a href="{{ path('app_tarif_add', { 'id' : facturation.id })}}">Ajouter un tarif</a>
+    <ul class="collection">
+    {% for tarif in tarifs %}
+
+        <li class="collection-item avatar">
+            <a href="{{ path('app_tarif_edit', {'id' : tarif.id })}}" title="editer">
+                <i class="material-icons circle">schedule</i>
+                <p class="title">#{{ tarif.id }} {{ tarif.libelle }}</p>
+            </a>
+                <span class="tarif">{{ tarif.tarif }} € HT</span>
+
+             <a href="{{ path('app_tarif_delete', {'id' : tarif.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
+
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="{{ path('app_tarif_add', { 'facturation_id' : facturation.id })}}">Ajouter un tarif</a>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="/js/collection-delete.js"></script>
 {% endblock %}

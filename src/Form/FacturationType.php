@@ -21,7 +21,7 @@ class FacturationType extends AbstractType
 
             ->add('ajouter', SubmitType::class, [
                 'attr' => [
-                    'class' => 'form-control' ]
+                    'class' => 'btn light-blue darken-1' ]
             ])
         ;
     }

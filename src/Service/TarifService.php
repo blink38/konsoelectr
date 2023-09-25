@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\Facturation;
 use App\Entity\Tarif;
-use App\Repository\FacturationRepository;
 use App\Repository\TarifRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -39,11 +37,28 @@ class TarifService
 
     public function remove(int $id): bool
     {
-        return $this->repository->delete($id);
+        try {
+            $tarif = $this->repository->find($id);
+
+            if ($tarif){
+                $this->doctrine->remove($tarif);
+                $this->doctrine->flush();
+                return true;
+            }
+
+        } catch (\Exception $e) {
+            error_log($e);
+        }
+        return false;
     }
 
     public function list(): array
     {
         return $this->repository->findAll();
+    }
+
+    public function listByFacturation($id): array
+    {
+        return $this->repository->findByFacturationId($id);
     }
 }

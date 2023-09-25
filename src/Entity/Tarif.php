@@ -47,13 +47,16 @@ class Tarif
     #[ORM\Column]
     private ?float $tarif = null;
 
+    #[ORM\Column]
+    private ?int $priority = 0;
+
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heure_debut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heure_fin = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Facturation::class, inversedBy: 'tarifs')]
     private ?Facturation $facturation = null;
 
     public function getId(): ?int
@@ -225,6 +228,18 @@ class Tarif
     public function setFacturation(?Facturation $facturation): static
     {
         $this->facturation = $facturation;
+
+        return $this;
+    }
+
+    public function getPriority() : int
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(int $priority) : static
+    {
+        $this->priority = $priority;
 
         return $this;
     }

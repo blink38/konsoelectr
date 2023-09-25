@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
 
         item.addEventListener('click', (event) => {
 
-            if (!confirm('Voulez-vous vraiment supprimer ce jeux de données ?')){
+            if (!confirm('Voulez-vous vraiment supprimer cet élement ?')){
                 event.preventDefault();
             }
 

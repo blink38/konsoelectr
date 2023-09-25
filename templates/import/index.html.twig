@@ -12,13 +12,13 @@
 
         {% for import in imports %}
             <li class="collection-item avatar"> 
-                <i class="material-icons circle">folder</i>
+                <i class="material-icons circle">download</i>
                 <span class="title">{{ import.libelle }}</span> <span class="date">{{ import.date|date("d/m/Y H:i") }}</span>
                 <p>nombre de relevés :  <strong>{{ import.nbReleves }}</strong>
                 {% if import.nbReleves > 0 %}<br />du {{ import.start|date("d/m/Y H:i") }} au {{ import.end|date("d/m/Y H:i") }} {% endif %}
                 </p>
            
-            <a href="{{ path('app_import_delete', {'id' : import.id })}}" class="collection-item-delete secondary-content">supprimer</a>
+            <a href="{{ path('app_import_delete', {'id' : import.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
             </li>
         {% endfor %}
     </ul>
@@ -28,5 +28,5 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="/js/import.js"></script>
+<script src="/js/collection-delete.js"></script>
 {% endblock %}

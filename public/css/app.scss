@@ -14,7 +14,13 @@
     margin-top: 2em;
 }
 
-
+h1 {
+    font-size: 1.8rem;
+    font-size: 1.8rem;
+    border-bottom: solid #4A7AC3 2px;
+    padding-bottom: 0.6rem;
+    color: #4A7AC3;
+}
 
 .import-wrapper {
 
@@ -25,5 +31,27 @@
             font-size: 0.95rem;
             margin-left: 1rem;
         }
+    }
+}
+
+fieldset {
+    border: none;
+}
+
+form .col.description {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    color: #888;
+}
+
+
+
+.collection-item {
+
+    .title {
+        font-size: 1.2rem;
+        font-weight: 700;
     }
 }
