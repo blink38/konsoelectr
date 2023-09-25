@@ -29,6 +29,7 @@ class ReleveService
         $memory_limit = ini_get('memory_limit');
         // echo "Current memory limit is: " . $memory_limit . "\n";
         ini_set('memory_limit', '1G');
+        ini_set('max_execution_time', '300');
 
 
         $import = new Import();
