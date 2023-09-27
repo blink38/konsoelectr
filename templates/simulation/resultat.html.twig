@@ -9,12 +9,59 @@
 
     <h1>Simulation #{{simulation.id}}</h1>
 
-    {{ simulation.resultat['montant']|format_currency('EUR') }} €
-    
+    <div class="item z-depth-3">
+      <div class="row">
+        <div class="col s2"><label>Facturation</label></div>
+        <div class="col s10">{{ simulation.facturation.libelle }}</div>
+      </div>
 
+      <div class="row">
+        <div class="col s2"><label>Jeu de données</label></div>
+        <div class="col s10">{{ simulation.data.libelle }}</div>
+      </div>
+      
+      <div class="row">
+        <div class="col s2"><label>Résumé</label></div>
+        <div class="col s10">consommation de <strong>{{ (simulation.resultat['conso'] / 1000) | number_format(2,'.','') }} kWh</strong>
+      pour un total de  <strong>{{ simulation.resultat['montant']|format_currency('EUR') }}</strong></div>
+      </div>
+    </div>
+   
+    <div class="item z-depth-3">
+      <table>
+        <thead>
+          <tr>
+            <th>Tarif</th>
+            <th>Consommation (kWh)</th>
+            <th>Prix (€)</th>
+          </tr>
+        </thead>
+
+        <tbody>    
+        {% for stat in simulation.resultat['stats'] %}
+          <tr>
+            <td>{{ stat['tarif'] }}</td>
+            <td>{{ (stat['conso']/1000)|number_format(2,'.','')}}</td>
+            <td>{{ stat['montant']|format_currency('EUR') }}</td>
+          </tr>
+        {% endfor %}
+
+          <tr>
+            <th>Total</th>
+            <th>{{ (simulation.resultat['conso'] / 1000) | number_format(2,'.','') }}</th>
+            <th>{{ simulation.resultat['montant']|format_currency('EUR') }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="item z-depth-3">
+      <label>logs :</label>
 <pre>
 {{ simulation.resultat['debug']  }} €
 </pre>
+    </div>
+
 
 </div>
 {% endblock %}

@@ -50,11 +50,21 @@ class SimulationController extends AbstractController
     }
 
     #[Route('/simulation/execute/{id}', name: 'app_simulation_execute')]
-    public function show(int $id, SimulationService $service): Response
+    public function execute(int $id, SimulationService $service): Response
     {
 
         $simulation = $service->simulate($id);
         $service->persist($simulation);
+        
+        return $this->render('simulation/resultat.html.twig', [
+            'simulation' => $simulation
+        ]);
+    }
+
+    #[Route('/simulation/show/{id}', name: 'app_simulation_show')]
+    public function show(int $id, SimulationService $service): Response
+    {
+        $simulation = $service->findById($id);
         
         return $this->render('simulation/resultat.html.twig', [
             'simulation' => $simulation

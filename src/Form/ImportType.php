@@ -31,7 +31,11 @@ class ImportType extends AbstractType
                 // ]
             ])
 
-            ->add('importer', SubmitType::class)
+            ->add('importer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn light-blue darken-1'
+                ]
+            ])
         ;
     }
 

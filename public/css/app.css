@@ -7,6 +7,14 @@
   position: inherit;
 }
 
+.no-fixed-action-btn {
+  position: inherit;
+}
+
+.file-field.input-field span label {
+  color: inherit;
+}
+
 pre {
   font-size: 0.8rem;
 }
@@ -44,4 +52,9 @@ form .col.description {
 .collection-item .title {
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.simulation-wrapper div.item {
+  padding: 1rem;
+  margin: 2rem 0;
 }/*# sourceMappingURL=app.css.map */

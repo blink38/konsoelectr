@@ -27,6 +27,8 @@ services:
         PHP_EXTENSION_GD: 1
         PHP_EXTENSION_INTL: 1
         PHP_EXTENSION_XDEBUG: 1
+        PHP_EXTENSION_SQLITE3: 1
+        PHP_EXTENSION_PDO_SQLITE: 1
 
         XDEBUG_MODE: debug
         XDEBUG_CLIENT_HOST: host.docker.internal

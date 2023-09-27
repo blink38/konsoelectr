@@ -6,7 +6,21 @@
 
 <h1>Importation de données de relève</h1>
 
-{{ form(form) }}
+ {{ form_start(form) }}
 
+    {{ form_row(form.libelle)}}
+
+    <div class="file-field input-field">
+      <div class="btn">
+        <span>{{ form_label(form.file)}}</span>
+        {{ form_widget(form.file)}}
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+
+    {{ form_row(form.importer)}}
+ {{ form_end(form)}}
 
 {% endblock %}

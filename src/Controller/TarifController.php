@@ -22,6 +22,23 @@ class TarifController extends AbstractController
 {
 
 
+    #[Route('/tarif/duplicate/{facturation}/{id}', name: 'app_tarif_duplicate')]
+    public function duplicate(int $facturation, int $id, TarifService $service): Response
+    {
+
+        $tarif = $service->findById($id);
+
+        $duplicate = $service->duplicate($id);
+
+
+        if ($duplicate !== null){
+            return $this->redirectToRoute('app_tarif_edit', [ 'id' => $duplicate->getId()]);
+        }
+
+        return $this->redirectToRoute('app_facturation_show', [ 'id' => $facturation]);
+    }
+
+
     #[Route('/tarif/delete/{id}', name: 'app_tarif_delete')]
     public function delete(int $id, TarifService $service): Response
     {
@@ -42,12 +59,14 @@ class TarifController extends AbstractController
         return $this->addOrEdit($request, $tarif, $service);
     }
 
+
     #[Route('/tarif/edit/{id}', name: 'app_tarif_edit')]
     public function edit(Request $request, int $id, TarifService $service): Response
     {
         $tarif = $service->findById($id);
         return $this->addOrEdit($request, $tarif, $service);
     }
+
 
     private function addOrEdit(Request $request, Tarif $tarif, TarifService $service) : Response
     {

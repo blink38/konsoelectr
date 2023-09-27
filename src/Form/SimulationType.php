@@ -32,7 +32,11 @@ class SimulationType extends AbstractType
             ]
             
         ]);
-        $builder->add('ajouter', SubmitType::class);
+        $builder->add('ajouter', SubmitType::class, [
+            'attr' => [
+                'class' => 'btn light-blue darken-1'
+            ]
+        ]);
 
     }
 

@@ -17,6 +17,21 @@ class TarifService
         $this->repository = $repository;
     }
 
+    public function duplicate(int $id) : ?Tarif
+    {
+
+        $from = $this->findById($id);
+        if ($from == null){
+            return null;
+        }
+
+        $duplicate = new Tarif();
+        $duplicate->duplicate($from);
+
+        return $this->persist($duplicate) ? $duplicate : null;
+    }
+
+
     public function persist(Tarif $tarif): bool
     {
 

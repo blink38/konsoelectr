@@ -18,25 +18,25 @@ class Tarif
     private ?string $libelle = null;
 
     #[ORM\Column]
-    private ?bool $lundi = null;
+    private ?bool $lundi = true;
 
     #[ORM\Column]
-    private ?bool $mardi = null;
+    private ?bool $mardi = true;
 
     #[ORM\Column]
-    private ?bool $mercredi = null;
+    private ?bool $mercredi = true;
 
     #[ORM\Column]
-    private ?bool $jeudi = null;
+    private ?bool $jeudi = true;
 
     #[ORM\Column]
-    private ?bool $vendredi = null;
+    private ?bool $vendredi = true;
 
     #[ORM\Column]
-    private ?bool $samedi = null;
+    private ?bool $samedi = true;
 
     #[ORM\Column]
-    private ?bool $dimanche = null;
+    private ?bool $dimanche = true;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_debut = null;
@@ -70,6 +70,30 @@ class Tarif
 
     private array $daysApply = [];
 
+
+    public function duplicate(Tarif $tarif) : static 
+    {
+        $this->libelle = $tarif->getLibelle() . " (copy)";
+        $this->lundi = $tarif->isLundi();
+        $this->mardi = $tarif->isMardi();
+        $this->mercredi = $tarif->isMercredi();
+        $this->jeudi = $tarif->isJeudi();
+        $this->vendredi = $tarif->isVendredi();
+        $this->samedi = $tarif->isSamedi();
+        $this->dimanche = $tarif->isDimanche();
+
+        $this->date_debut = $tarif->getDateDebut();
+        $this->date_fin = $tarif->getDateFin();
+
+        $this->tarif = $tarif->getTarif();
+        $this->priority = $tarif->getPriority();
+        $this->heure_debut = $tarif->getHeureDebut();
+        $this->heure_fin = $tarif->getHeureFin();
+        $this->facturation = $tarif->getFacturation();
+        $this->days = $tarif->getDays();
+
+        return $this;
+    }
 
     public function prepare(): void
     {
@@ -125,6 +149,10 @@ class Tarif
     {
         return $this->lundi;
     }
+    public function getLundi(): ?bool
+    {
+        return $this->lundi;
+    }
 
     public function setLundi(bool $lundi): static
     {
@@ -134,6 +162,10 @@ class Tarif
     }
 
     public function isMardi(): ?bool
+    {
+        return $this->mardi;
+    }
+    public function getMardi(): ?bool
     {
         return $this->mardi;
     }
@@ -149,6 +181,10 @@ class Tarif
     {
         return $this->mercredi;
     }
+    public function getMercredi(): ?bool
+    {
+        return $this->mercredi;
+    }
 
     public function setMercredi(bool $mercredi): static
     {
@@ -161,6 +197,10 @@ class Tarif
     {
         return $this->jeudi;
     }
+    public function getJeudi(): ?bool
+    {
+        return $this->jeudi;
+    }
 
     public function setJeudi(bool $jeudi): static
     {
@@ -170,6 +210,10 @@ class Tarif
     }
 
     public function isVendredi(): ?bool
+    {
+        return $this->vendredi;
+    }
+    public function getVendredi(): ?bool
     {
         return $this->vendredi;
     }
@@ -186,6 +230,10 @@ class Tarif
         return $this->samedi;
     }
 
+    public function getSamedi(): ?bool
+    {
+        return $this->samedi;
+    }
     public function setSamedi(bool $samedi): static
     {
         $this->samedi = $samedi;
@@ -194,6 +242,10 @@ class Tarif
     }
 
     public function isDimanche(): ?bool
+    {
+        return $this->dimanche;
+    }
+    public function getDimanche(): ?bool
     {
         return $this->dimanche;
     }

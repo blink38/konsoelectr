@@ -16,8 +16,9 @@
                     <i class="material-icons circle">point_of_sale</i>
                 </a>
                 <p class="title"><a href="{{ path('app_facturation_show', {'id' : facturation.id })}}">#{{ facturation.id }} {{ facturation.libelle }}</a></p>
-                <span>{{ facturation.tarifs|length }} tarif{% if facturation.tarifs|length > 1 %}s{% endif %} défini{% if facturation.tarifs|length > 1 %}s{% endif %}</span>
-                
+                <p>{{ facturation.tarifs|length }} tarif{% if facturation.tarifs|length > 1 %}s{% endif %} défini{% if facturation.tarifs|length > 1 %}s{% endif %}</p>
+                <p>{{ facturation.simulations|length }} simulation{% if facturation.simulations|length > 1 %}s{% endif %} définie{% if facturation.simulations|length > 1 %}s{% endif %}</p>
+
                 <a href="{{ path('app_facturation_delete', {'id' : facturation.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
 
 

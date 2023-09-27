@@ -19,15 +19,17 @@
                 <p>{{ simulation.facturation.libelle }} - {{ simulation.data.libelle }}</p>
                 
                 {% if not simulation.resultat is empty %}
-                <p class="resultat">{{ simulation.resultat.montant|format_currency('EUR') }}</p>
+                <p class="resultat">{{ simulation.resultat.montant|format_currency('EUR') }} / {{ (simulation.resultat['conso'] / 1000) | number_format(2,'.','') }} kWh</p>
                 {% endif %}
 
-                <p>
-                 <a href="{{ path('app_simulation_execute', {'id' : simulation.id })}}" class="btn green accent-4">
-                 executer</a>
-                </p>
            
-            <a href="{{ path('app_simulation_delete', {'id' : simulation.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete secondary-content"><i class="material-icons">delete</i></a>
+           <div class="secondary-content">
+                <a href="{{ path('app_simulation_execute', {'id' : simulation.id })}}" title="executer" class="btn-floating  green accent-4"><i class="material-icons">settings</i></a>
+                <a href="{{ path('app_simulation_show', {'id' : simulation.id })}}" title="afficher" class="btn-floating  light-blue darken-1"><i class="material-icons">visibility</i></a>
+                <a href="{{ path('app_simulation_delete', {'id' : simulation.id })}}" title="supprimer" class="btn-floating red accent-4 collection-item-delete"><i class="material-icons">delete</i></a>
+            </div>
+
+
             </li>
         {% endfor %}
     </ul>

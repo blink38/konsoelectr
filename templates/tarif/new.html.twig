@@ -24,19 +24,16 @@
     <div class="col s6">{{ form_row(form.days) }}</div>
     <div class="col s6"></div>
 
-
+    
     <div class="col s12 description">Jour de la semaine pour lesquels le tarif s'applique</div>
     {% for jour in [form.lundi,form.mardi,form.mercredi,form.jeudi,form.vendredi,form.samedi,form.dimanche] %}
     <div class="col s6">
-    <p>
-    <label>
-    {{ field_value(jour) }}
-        <input  name="{{ field_name(jour) }}" 
-                value="{{ field_value(jour) }}"
-                type="checkbox" />
-        <span>{{ field_label(jour) }}</span>
-    </label>
-    </p>
+        <p>
+            <label>
+                {{ form_widget(jour) }}
+                <span>{{ field_label(jour) }}</span>
+            </label>
+        </p>
     </div>
     {% endfor %}
 

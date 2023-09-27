@@ -75,7 +75,8 @@ class TarifType extends AbstractType
         $builder->add('tarif', NumberType::class, [
             'attr' => [
                 'class' => ''
-            ]
+            ],
+            'scale' => 4
         ]);
 
         $builder->add('priority', NumberType::class, [            
@@ -90,7 +91,7 @@ class TarifType extends AbstractType
         $builder->add('ajouter', SubmitType::class, [
             'label' => empty($options['data']->getId()) ? 'Ajouter' : 'Modifier',
             'attr' => [
-                'class' => 'btn'
+                'class' => 'btn light-blue darken-1'
             ]
         ]);
     }

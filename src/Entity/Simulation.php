@@ -14,7 +14,7 @@ class Simulation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Facturation::class, inversedBy: 'simulations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Facturation $facturation = null;
 

@@ -17,8 +17,11 @@ class Facturation
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(targetEntity: Tarif::class, mappedBy: 'facturation')]
+    #[ORM\OneToMany(targetEntity: Tarif::class, mappedBy: 'facturation', cascade: ['remove'])]
     private Collection $tarifs;
+    
+    #[ORM\OneToMany(targetEntity: Simulation::class, mappedBy: 'facturation', cascade: ['remove'])]
+    private Collection $simulations;
 
 
     public function getId(): ?int
@@ -38,22 +41,25 @@ class Facturation
         return $this;
     }
 
-    /**
-     * Get the value of tarifs
-     */ 
     public function getTarifs() : Collection
     {
         return $this->tarifs;
     }
 
-    /**
-     * Set the value of tarifs
-     *
-     * @return  self
-     */ 
     public function setTarifs($tarifs) : static
     {
         $this->tarifs = $tarifs;
+        return $this;
+    }
+
+    public function getSimulations() : Collection
+    {
+        return $this->simulations;
+    }
+
+    public function setSimulations($simulations) : static
+    {
+        $this->simulations = $simulations;
         return $this;
     }
 }
